@@ -10,20 +10,27 @@ jobs:
     steps:
       - checkout
       - run:
+          name: install dependencies
           command: |  # use pipenv to install dependencies
             sudo pip install pipenv
             pipenv install
       - run:
+          name: Run Unit Test
           command: pipenv run pytest ./test_hello_world.py
-          name: Test
 
-  build-docker-file:
+  build-and-push-docker-image-to-ecr:
     docker:
       - image: circleci/python:3.6.4
     steps:
       - checkout
       - run:
+        name: Build Docker Image
         command: docker build -t superawesome_helloworld .
+      - run:
+        name: Push Image to ecr
+        command: uri=$(aws ecr describe-repositories | jq -r '.repositories[0].repositoryUri') && docker tag superawesome_helloworld $uri && docker push $uri
+      -
+
   
   
 workflows:

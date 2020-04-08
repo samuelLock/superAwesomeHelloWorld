@@ -4,7 +4,7 @@ import unittest
 class TestHelloWorld(unittest.TestCase):
 
     def testMessage(self):
-        message = 'Hello, World!'
+        message = 'Hello World!'
         self.assertEqual(hello_world.message(), message)
 
 if __name__ == '__main__':
