@@ -17,6 +17,15 @@ jobs:
           command: pipenv run pytest ./test_hello_world.py
           name: Test
 
+  build-docker-file:
+    docker:
+      - image: circleci/python:3.6.4
+    steps:
+      - checkout
+      - run:
+        command: docker build -t superawesome_helloworld .
+  
+  
 workflows:
   main:
     jobs:
