@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  python: circleci/python@0.2.1
+  aws-cli: circleci/aws-cli@1.0.0
 
 jobs:
   build-and-test:
@@ -24,6 +24,8 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - aws-cli/install
+      - aws-cli/setup
       - run:
           name: Build Docker Image
           command: docker build -t superawesome_helloworld .
