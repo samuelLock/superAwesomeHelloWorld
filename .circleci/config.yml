@@ -24,16 +24,14 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Build Docker Image
-        command: docker build -t superawesome_helloworld .
+          name: Build Docker Image
+          command: docker build -t superawesome_helloworld .
       - run:
-        name: Push Image to ecr
-        command: uri=$(aws ecr describe-repositories | jq -r '.repositories[0].repositoryUri') && docker tag superawesome_helloworld $uri && docker push $uri
-      -
+          name: Push Image to ecr
+          command: uri=$(aws ecr describe-repositories | jq -r '.repositories[0].repositoryUri') && docker tag superawesome_helloworld $uri && docker push $uri
 
-  
-  
 workflows:
   main:
     jobs:
       - build-and-test
+      - build-and-push-docker-image-to-ecr
